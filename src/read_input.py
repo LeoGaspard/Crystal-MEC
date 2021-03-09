@@ -162,10 +162,10 @@ def read_input(inputFile):
         elif ls[0].casefold() == 'evjen':
             evjen = True
         elif ls[0].casefold() == 'symmetry_generator':
-            line = f.readline()
+            line = f.readline().replace("'","")
             while line.strip().casefold() != 'end':
                 symGenerator.append(line.split(','))
-                line = f.readline()
+                line = f.readline().replace("'","")
         elif ls[0].casefold() == 'generator':
             line = f.readline()
             while line.strip().casefold() != 'end':
