@@ -131,10 +131,11 @@ if __name__=='__main__':
         charges = evjen_charges(coordinates,atoms)
     else:
         charges = []
+        atoms = np.array(atoms).flatten()
         for i in range(len(coordinates)):
             li = coordinates[i][3]
-            ii = np.where(atoms=li)[0]
-            charges.append(atoms[ii+1])
+            ii = np.where(atoms==li)[0]
+            charges.append(float(atoms[ii+1]))
 
     if verbose > 1:
         print("The total charge fragment+pseudopotential+bath is : % 8.6f\n"%np.sum(charges))
