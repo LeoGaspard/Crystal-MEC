@@ -132,7 +132,7 @@ def find_center(centerList, coordinates):
         if at[3] in centerList:
             centers = sorted(centers, key=operator.itemgetter(3)) # Sorting the list with respect to the distance to the origin
             d = distance(at,[0,0,0])
-            if d <= centers[-1][-1]:
+            if d <= centers[-1][-1] and d > 0.0:
                 centers[-1] = [at[0],at[1],at[2],d]
 
     center = np.mean(centers,axis=0)[:3] # Computing the barycenter
