@@ -60,14 +60,18 @@ def big_cell(generator,symGenerator,a,b,c,alpha,beta,gamma,nA,nB,nC):
                 r1 = np.array(coords[i][:3])
                 r2 = np.array(coords[j][:3])
                 r12 = r1-r2
+                da = np.sqrt(r12[0]**2+r12[1]**2+r12[2]**2)
                 r12 = r12 - np.round(r12)
+                db = da - np.sqrt(r12[0]**2+r12[1]**2+r12[2]**2)
                 r12 = np.matmul(fracToCart,r12)
                 d = np.sqrt(r12[0]**2+r12[1]**2+r12[2]**2)
 
-                if(d<1e-5):
+                if(d<1e-2):
                     # We check if we don't already want to delete this atom
                     if j not in toDel:
                         toDel.append(j)
+
+    toDel = sorted(toDel)
 
     # We delete the atoms in the list
     for i in range(len(toDel)):
@@ -100,6 +104,7 @@ def big_cell(generator,symGenerator,a,b,c,alpha,beta,gamma,nA,nB,nC):
         r = [at[0],at[1],at[2]]
         rxyz = np.matmul(fracToCart,r)
         coords.append([rxyz[0],rxyz[1],rxyz[2],at[3],'C'])
+
 
     # Returns the list of the atoms [x,y,z,label,second_label]
     return coords
