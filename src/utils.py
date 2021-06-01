@@ -204,6 +204,8 @@ def find_fragment(coordinates, patterns, npatterns,notInFrag):
             for at in coordinates:
                 if at[3] == pattern[1]:
                     d = distance([0,0,0],at)
+                    if d > 10:
+                        break
                     if d < dc :
                         accept = True
                         for exc in notInFrag:
@@ -222,12 +224,20 @@ def find_fragment(coordinates, patterns, npatterns,notInFrag):
                     atIn.append([100,100,100,d])
 
                 for at in coordinates:
+                    if distance(at,[0,0,0]) > 10:
+                        break
                     if at[3] == pattern[j+1]:
                         atIn = sorted(atIn,key=operator.itemgetter(3))
                         d = distance(at,c)
                         trial = [at[0],at[1],at[2],d,coordinates.index(at)]
                         if d < atIn[-1][3] and trial not in atIn:
-                            atIn[-1] = trial
+                            accept = True
+                            for exc in notInFrag:
+                                d = distance(exc,trial)
+                                if d < 1e-5:
+                                    accept = False
+                            if accept:
+                                atIn[-1] = trial
             for at in atIn:
                 inPattern.append(at[4])
 

@@ -84,21 +84,21 @@ if __name__=='__main__':
         xVec = find_center(X,coordinates)
         M = rotation_matrix(k,xVec)
 
-        rotate(M, coordinates)
+        coordinates = rotate(M, coordinates)
     if Y != []:
         k = [0,1,0]
 
         yVec = find_center(Y,coordinates)
         M = rotation_matrix(k,yVec)
 
-        rotate(M, coordinates)
+        coordinates = rotate(M, coordinates)
     if Z != []:
         k = [0,0,1]
 
         zVec = find_center(Z,coordinates)
         M = rotation_matrix(k,zVec)
 
-        rotate(M, coordinates)
+        coordinates = rotate(M, coordinates)
 
     if verbose > 2:
         print("The big cell contains %5i atoms and will be printed in the file big_cell.xyz\n"%len(coordinates))
@@ -112,6 +112,8 @@ if __name__=='__main__':
         write_coordinates(coordinates,'sphere.xyz',3)
 
     # Finding the fragment
+
+    coordinates = sorted(coordinates, key=lambda x:distance(x,[0,0,0]))
 
     nAt, coordinates = find_fragment(coordinates,pattern,npattern,notInFrag)
 

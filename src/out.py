@@ -70,7 +70,7 @@ def out_input_param(rB , rPP, center, X, Y, Z, symmetry, outputFile, pattern, np
         if len(notInFrag) > 0:
             print("The following %5s will be excluded from the fragment :"%('atom'+'s'*(len(notInFrag)>1)))
             for i in notInFrag:
-                print("   %2s     % 8.6f   % 8.6f    % 8.6f"%(i[0],i[1],i[2],i[3]))           
+                print(" % 8.6f   % 8.6f    % 8.6f"%(i[0],i[1],i[2]))           
             print()
 
 # Write the coordinates to a file using the string

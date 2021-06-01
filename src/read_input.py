@@ -181,7 +181,7 @@ def read_input(inputFile):
             while line.strip().casefold() != 'end':
                 ls = line.split()
                 try:
-                    notInFrag.append([ls[0],float(ls[1]),float(ls[2]),float(ls[3])])
+                    notInFrag.append([float(ls[0]),float(ls[1]),float(ls[2])])
                 except ValueError:
                     print("Error while parsing the input file : bad value for the atom %s"%line)
                     sys.exit()
