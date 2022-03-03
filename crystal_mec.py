@@ -22,7 +22,8 @@ if __name__=='__main__':
         elif sys.argv[2] == 'vvv':
             verbose = 3
         else:
-            print("Unknown argument -%s-"%sys.argv[3])
+            print("Unknown argument -%s-"%sys.argv[2])
+            sys.exit()
     elif len(sys.argv) > 3:
         print("Too much arguments, please provide an input file and a verbose level (v, vv, vvv)")
         sys.exit()
@@ -163,4 +164,22 @@ if __name__=='__main__':
     if verbose > 2:
         print("The output has been written to %s \n"%outputFile)
         out_interatomic_distances(coordinates)
+
+    with open("output.tcl",'w') as f:
+        tp = [atoms[i] for i in range(0, len(atoms), 4)]
+        f.write("mol new fragment.xyz\nmol delrep 0 0\nmol representation CPK\n")
+        for i in tp:
+            if i in ["Sc", "Ti", "V" , "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
+                     "Y" , "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd",
+                     "La", "Hf", "Ta", "W" , "Re", "Os", "Ir", "Pt", "Au", "Hg"]:
+                f.write('mol selection "type {:s}"\nmol color ColorID 3\nmol addrep 0\n'.format(i))
+            elif i in ["F", "Cl", "Br", "I"]:
+                f.write('mol selection "type {:s}"\nmol color ColorID 7\nmol addrep 0\n'.format(i))
+            else:
+                f.write('mol selection "type {:s}"\nmol color Name\nmol addrep 0\n'.format(i))
+
+        f.write("mol new bath_coloured.xyz\nmol delrep 0 1\nmol representation Points\n")
+        f.write('mol selection "type Cl"\nmol color colorID 17\nmol addrep 1\n')
+        f.write('mol selection "type C"\nmol color colorID 0\nmol addrep 1\n')
+                
 
