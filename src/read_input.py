@@ -9,6 +9,9 @@ def read_input(inputFile):
     X = []
     Y = []
     Z = []
+    xOy = []
+    xOz = []
+    yOz = []
     symmetry = []
     outputFile = ""
     pattern = []
@@ -67,6 +70,15 @@ def read_input(inputFile):
         elif ls[0].casefold() == 'z_axis':
             ls.pop(0)
             Z = [i for i in ls]
+        elif ls[0].casefold() == "xoy":
+            xOy.append( f.readline().split() )
+            xOy.append( f.readline().split() )
+        elif ls[0].casefold() == "xoz":
+            xOz.append( f.readline().split() )
+            xOz.append( f.readline().split() )
+        elif ls[0].casefold() == "yoz":
+            yOz.append( f.readline().split() )
+            yOz.append( f.readline().split() )
         elif ls[0].casefold() == 'symmetry':
             ls.pop(0)
             symmetry = [i for i in ls]
@@ -192,4 +204,4 @@ def read_input(inputFile):
             print("Bad input : missing the keyword -- %s --"%t)
             sys.exit()
 
-    return rB , rPP, center, X, Y, Z, symmetry, outputFile, pattern, npattern , atoms, dist, a, b, c, alpha, beta, gamma, showBath, evjen, showFrag, notInPseudo, notInFrag, symGenerator, generator, translate
+    return rB , rPP, center, xOy, xOz, yOz, X, Y, Z, symmetry, outputFile, pattern, npattern , atoms, dist, a, b, c, alpha, beta, gamma, showBath, evjen, showFrag, notInPseudo, notInFrag, symGenerator, generator, translate
