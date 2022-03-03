@@ -119,7 +119,7 @@ def translate(v,coordinates):
 
 # Finds the point at the center of the given atoms that are the 
 # closest to the origin
-def find_center(centerList, coordinates, without=[]):
+def find_center(centerList, coordinates):
 
     centers = []
     for i in range(len(centerList)):
@@ -129,14 +129,6 @@ def find_center(centerList, coordinates, without=[]):
         c.append(distance(c,[0,0,0]))  # Computing the distance to the origin
 
     for at in coordinates:
-        w = True
-        for i in without:
-            d = distance(at, i)
-            if d < 1e-6:
-                w = False
-                break
-        if not w:
-            continue
         if at[3] in centerList:
             centers = sorted(centers, key=operator.itemgetter(3)) # Sorting the list with respect to the distance to the origin
             d = distance(at,[0,0,0])

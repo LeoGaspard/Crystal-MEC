@@ -31,7 +31,7 @@ if __name__=='__main__':
     inputFile = sys.argv[1]
 
     # Reads all the parameters from the input file
-    rB , rPP, center, X, Y, Z, xOy, yOz, xOz, symmetry, outputFile, pattern, npattern , atoms, dist, a, b, c, alpha, beta, gamma, showBath, evjen, showFrag, notInPseudo, notInFrag, symGenerator, generator, translation = read_input(inputFile)
+    rB , rPP, center, X, Y, Z, symmetry, outputFile, pattern, npattern , atoms, dist, a, b, c, alpha, beta, gamma, showBath, evjen, showFrag, notInPseudo, notInFrag, symGenerator, generator, translation = read_input(inputFile)
 
     if verbose > 0:
         out_input_param(rB , rPP, center, X, Y, Z, symmetry, outputFile, pattern, npattern , atoms, dist, a, b, c, alpha, beta, gamma, showBath, evjen, showFrag, notInPseudo, notInFrag, symGenerator, generator, translation)
@@ -79,59 +79,25 @@ if __name__=='__main__':
 
     
     # Orienting the big cell
-    if xOy != []:
-        a = find_center(xOy[0], coordinates)
-        b = a
-        w = [a]
-        while np.absolute ( np.absolute( np.dot( a / np.linalg.norm(a) , b / np.linalg.norm(a) ) ) - 1 ) <= 1e-6:
-            b = find_center(xOy[1], coordinates, without=w)
-            w.append(b)
-        c = np.cross(a, b)
-        k = [0,0,1]
-        M = rotation_matrix(c, k)
-        coordinates = rotate(M, coordinates)
-    if xOz != []:
-        a = find_center(xOz[0], coordinates)
-        b = a
-        w = [a]
-        while np.absolute ( np.absolute( np.dot( a / np.linalg.norm(a) , b / np.linalg.norm(a) ) ) - 1 ) <= 1e-6:
-            b = find_center(xOz[1], coordinates, without=w)
-            w.append(b)
-        c = np.cross(a, b)
-        k = [0,1,0]
-        M = rotation_matrix(c, k)
-        coordinates = rotate(M, coordinates)
-    if yOz != []:
-        a = find_center(yOz[0], coordinates)
-        b = a
-        w = [a]
-        while np.absolute ( np.absolute( np.dot( a / np.linalg.norm(a) , b / np.linalg.norm(a) ) ) - 1 ) <= 1e-6:
-            b = find_center(yOz[1], coordinates, without=w)
-            w.append(b)
-        c = np.cross(a, b)
-        k = [1,0,0]
-        M = rotation_matrix(c, k)
-        coordinates = rotate(M, coordinates)
     if X != []:
         k = [1,0,0]
 
         xVec = find_center(X,coordinates)
-        M = rotation_matrix(xVec, k)
+        M = rotation_matrix(k,xVec)
 
         coordinates = rotate(M, coordinates)
-
     if Y != []:
         k = [0,1,0]
 
         yVec = find_center(Y,coordinates)
-        M = rotation_matrix(yVec, k)
+        M = rotation_matrix(k,yVec)
 
         coordinates = rotate(M, coordinates)
     if Z != []:
         k = [0,0,1]
 
         zVec = find_center(Z,coordinates)
-        M = rotation_matrix(zVec, k)
+        M = rotation_matrix(k,zVec)
 
         coordinates = rotate(M, coordinates)
 
